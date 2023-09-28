@@ -129,4 +129,7 @@ def CustumizedDrivingMode():
     Motor2.moveB(100)
     Motor4.moveB(100)
 
-FullPowerDrivingMode()
+try:
+    FullPowerDrivingMode()
+except:
+    Motor1.Ena
