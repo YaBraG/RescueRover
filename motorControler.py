@@ -128,3 +128,5 @@ def CustumizedDrivingMode():
     # Backward 2 Left wheels
     Motor2.moveB(100)
     Motor4.moveB(100)
+
+FullPowerDrivingMode()
