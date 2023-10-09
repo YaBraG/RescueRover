@@ -1,6 +1,8 @@
 import RPi.GPIO as GPIO
-from time import sleep
+import time
+import socketio
 
+sio = socketio.Client()
 GPIO.satmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
@@ -31,7 +33,7 @@ Motor1 = MotionMode(4, 17, 27)
 Motor2 = MotionMode(24, 23, 22)
 Motor3 = MotionMode(26, 16, 13)
 Motor4 = MotionMode(12, 5, 6)
-
+Motor1.pwm()
 
 def FullPowerDrivingMode():
     # FORWARD MOVEMENT
@@ -130,6 +132,30 @@ def CustumizedDrivingMode():
     Motor4.moveB(100)
 
 try:
-    FullPowerDrivingMode()
-except:
-    Motor1.Ena
+    @sio.event
+    def connect():
+        print('connection established')
+        sio.emit("ID", 'RescueRober-client')
+
+    @sio.event
+    def disconnect():
+        print('disconnected from server')
+        time.sleep(0.5)
+        
+
+    @sio.on('inertial-order')
+    def on_message(yaw, pitch):
+        m1Yaw = round(remap(yaw, 180, -180, 0, 1023))
+        m2Pitch = round(remap(pitch, -180, 180, 150, 1023))
+        motor1.set_goal_position(m1Yaw)
+        motor2.set_goal_position(m2Pitch)
+
+    sio.connect('http://192.168.2.13:3000')
+    sio.wait()
+
+except KeyboardInterrupt:
+    time.sleep(0.5)
+    motor1.set_moving_speed(0)
+    motor2.set_moving_speed(0)
+    motor1.disable_torque()
+    motor2.disable_torque()
