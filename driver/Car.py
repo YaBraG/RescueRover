@@ -90,35 +90,35 @@ try:
         Motor4.stop()
 
     @sio.on('drive-orders')
-    def on_message(angle, speed):
-        asMultiplier = angle * speed
+    def on_message(leftAngle, leftSpeed):
+        asMultiplier = leftAngle * leftSpeed
 
         # Speed Limiter
-        if speed < 0.05:
+        if leftSpeed < 0.05:
             motor1Speed = 0
             motor2Speed = 0
 
         # First Quadrant
-        elif angle >= 0 and angle < 90:
+        elif leftAngle >= 0 and leftAngle < 90:
 
-            motor1Speed = round(100 * speed)
+            motor1Speed = round(100 * leftSpeed)
             Motor1.moveF()
             motor2Speed = round(remap(asMultiplier, 0, 90, 0, 100))
             Motor2.moveF()
 
         # Second Quadrant
-        elif angle > 90 and angle <= 180:
+        elif leftAngle > 90 and leftAngle <= 180:
             motor1Speed = round(remap(asMultiplier, 90, 180, 1023, 0))
-            motor2Speed = round(2047 * speed)
+            motor2Speed = round(2047 * leftSpeed)
 
         # Third Quadrant
-        elif angle < 0 and angle > -90:
+        elif leftAngle < 0 and leftAngle > -90:
             motor1Speed = round(remap(asMultiplier, -90, 0, 2047, 0))
-            motor2Speed = round(1023 * speed)
+            motor2Speed = round(1023 * leftSpeed)
 
         # Fourth Quadrant
-        elif angle < -90 and angle >= -180:
-            motor1Speed = round(2047 * speed)
+        elif leftAngle < -90 and leftAngle >= -180:
+            motor1Speed = round(2047 * leftSpeed)
             motor2Speed = round(remap(asMultiplier, -180, -90, 0, 1023))
 
         Motor1.drive(motor1Speed)
