@@ -120,9 +120,14 @@ try:
         # elif leftAngle < -90 and leftAngle >= -180:
         #     motor1Speed = round(2047 * leftSpeed)
         #     motor2Speed = round(remap(asMultiplier, -180, -90, 0, 1023))
+        print(motor1Speed)
+        print(motor2Speed)
+        try:
+            Motor1.drive(motor1Speed)
+            Motor2.drive(motor2Speed)
 
-        Motor1.drive(motor1Speed)
-        Motor2.drive(motor2Speed)
+        except:
+            print("e")
 
     sio.connect('http://10.13.82.169:3000')
     sio.wait()
