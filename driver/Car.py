@@ -98,13 +98,13 @@ try:
             motor1Speed = 0
             motor2Speed = 0
 
-        # # First Quadrant
-        # elif leftAngle >= 0 and leftAngle < 90:
+        # First Quadrant
+        elif leftAngle >= 0 and leftAngle < 90:
 
-        #     motor1Speed = round(100 * leftSpeed)
-        #     Motor1.moveF()
-        #     motor2Speed = round(remap(asMultiplier, 0, 90, 0, 100))
-        #     Motor2.moveF()
+            motor1Speed = round(100 * leftSpeed)
+            Motor1.moveF()
+            motor2Speed = round(remap(asMultiplier, 0, 90, 0, 100))
+            Motor2.moveF()
 
         # # Second Quadrant
         # elif leftAngle > 90 and leftAngle <= 180:
