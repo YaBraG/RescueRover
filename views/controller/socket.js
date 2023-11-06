@@ -1,4 +1,4 @@
-const socket = io("http://192.168.2.16:3000")
+const socket = io("http://10.13.82.169:3000")
 
 socket.on("connection", ()=> {
     console.log("c")
