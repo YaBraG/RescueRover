@@ -124,7 +124,7 @@ try:
         Motor1.drive(motor1Speed)
         Motor2.drive(motor2Speed)
 
-    sio.connect('http://192.168.2.12:3000')
+    sio.connect('http://10.13.82.169:3000')
     sio.wait()
 
 except KeyboardInterrupt:
