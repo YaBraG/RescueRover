@@ -1,6 +1,8 @@
-const socket = io("http://10.13.82.169:3000")
+const domain = (new URL(window.location.href));
+const socket = io(domain.host);
+let startTime = Date.now();
 
-socket.on("connection", ()=> {
-    console.log("c")
-    socket.emit("ID", "js-controller")
+socket.on("connect", ()=> {
+    socket.emit("ID", "js-controller");
+    console.log("CONNECTION");
 })

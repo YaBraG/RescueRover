@@ -3,7 +3,7 @@ import time
 import socketio
 
 sio = socketio.Client()
-GPIO.satmode(GPIO.BCM)
+GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 

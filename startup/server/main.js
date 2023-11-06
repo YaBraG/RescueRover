@@ -5,20 +5,7 @@ const express = require("express");
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, { /* options */ });
-
-let sampler = 0;
-
 const PORT = 3000;
-
-let turretBoundaries={
-  pitch:  {h:0.25, l:0.129},
-  yaw:    {h:0.25,  l:0.06}
-}
-
-let turretPosition = {
-  pitch:  0.2,
-  yaw:    0.2
-}
 
 function exec () {
   io.on("connection", (socket) => {
@@ -28,11 +15,9 @@ function exec () {
 
     socket.on("drive-control", data=>{
       io.emit("drive-orders", data.angle, data.speed)
-      console.log(data.ange)
+      console.log(data.angle)
     })
-    socket.on("ID", "js-controller"=>{
-      console.log('connected')
-    })
+    
 
   });
   
@@ -43,6 +28,5 @@ function exec () {
     console.log(`http://${ip}:${PORT}`)
   });
 }
-// exec();
 
 module.exports = exec;
