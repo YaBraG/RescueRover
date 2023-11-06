@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "pi-blaster.js": "^0.1.3",
+    "socket.io": "^4.6.0",
+    "socket.io-client": "^4.6.0"
+  },
+  "name": "adm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dakkapik/adm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dakkapik/adm/issues"
+  },
+  "homepage": "https://github.com/dakkapik/adm#readme",
+  "description": ""
+}

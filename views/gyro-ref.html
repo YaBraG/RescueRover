@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controls</title>
+    <style>
+        html, body {
+            box-sizing: border-box;
+        }
+        /* DELETE THIS HTML THIS SHOULD BE ON GYRO DISPLAY */
+    </style>
+</head>
+<body>
+<div>
+    <h1 id="pitch"></h1>
+    <h1 id="roll"></h1>
+    <h1 id="yaw"></h1>
+</div>
+<div>
+    <h1 id="x"></h1>
+    <h1 id="y"></h1>
+    <h1 id="z"></h1>
+</div>
+<div>
+    <h1 id="pitchr"></h1>
+    <h1 id="rollr"></h1>
+    <h1 id="yawr"></h1>
+</div>
+<div>
+    <ul id="sample-display">
+    </ul>
+</div>
+    
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const domain = (new URL(window.location.href));
+    
+    const socket = io(domain.host);
+    
+    socket.on("connect", () => {
+        socket.emit("ID", "gyro-ref");
+        console.log("CONNECTION");
+    })
+</script>
+<script>
+    const sampleDisplay = document.getElementById("sample-display");
+    const pitchDis = document.getElementById("pitch");
+    const rollDis = document.getElementById("roll");
+    const yawDis = document.getElementById("yaw");
+    const pitchRawDis = document.getElementById("pitchr");
+    const rollDisRawDis = document.getElementById("rollr");
+    const yawDisRawDis = document.getElementById("yawr");
+
+    const xd = document.getElementById("x");
+    const yd = document.getElementById("y");
+    const zd = document.getElementById("z");
+
+    socket.on("magnet", (x,y,z)=> {
+        xd.innerHTML = `magnet x: ${x}`;
+        yd.innerHTML = `magnet y: ${y}`;
+        zd.innerHTML = `magnet z: ${z}`;
+    })
+
+   socket.on("gyro-output", (pitch, roll, yaw) => {
+    // pitchDis.innerHTML = `Pitch: ${pitch}`;
+    // rollDis.innerHTML = `roll: ${roll}`;
+    // yawDis.innerHTML = `yaw: ${yaw}`;
+
+   })
+
+   let sampler = 0;
+
+   socket.on("gyro-raw", (pitch, roll, yaw) => {
+    pitchRawDis.innerHTML = `Pitch: ${pitch}`;
+    rollDisRawDis.innerHTML = `roll: ${roll}`;
+    yawDisRawDis.innerHTML = `yaw: ${yaw}`;
+    
+
+    if(sampler % 100 === 0){
+        const li = document.createElement("li")
+        li.innerText = `x: ${pitch} y: ${roll} z: ${yaw}`
+        sampleDisplay.appendChild(li)
+      }
+      sampler ++;
+   })
+</script>
+</html>

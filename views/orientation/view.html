@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
+    <meta charset="utf-8" />
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        canvas {
+            display: block;
+        }
+
+        .hud{
+          margin: 5px 5px;
+          /* padding: 10px 15px; */
+          position: fixed;
+          background-color: grey;
+          /* display: flex; */
+        }
+
+        .hud > div {
+          display: flex;
+          border-style: solid;
+        }
+
+        .hud > div> p {
+          width: 60px;
+        }
+
+        .hud > div> div {
+          width: 120px;
+        }
+    </style>
+  </head>
+<body>
+  <div class="hud">
+    <h3>Raw Gyro Values</h3>
+    <div id="gyro">
+      <p>GYRO:</p>
+      <div>
+        <div id="gx">x</div>
+        <div id="gy">y</div>
+        <div id="gz">z</div>
+      </div>
+    </div>
+    <div id="accel">
+      <p>ACCEL</p>
+      <div>
+        <div id="ax">x</div>
+        <div id="ay">y</div>
+        <div id="az">z</div>
+      </div>
+    </div>
+    <div id="mag">
+      <p>MAG</p>
+      <div>
+        <div id="mx">x</div>
+        <div id="my">y</div>
+        <div id="mz">z</div>
+      </div>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="orientation/accel"></script>
+  <script src="orientation/gyro"></script>
+  <script src="orientation/mag"></script>
+  <script src="orientation/connection"></script>
+  <script src="orientation/draw"></script>
+</body>
+</html>

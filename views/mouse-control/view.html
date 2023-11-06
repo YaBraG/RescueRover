@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controls</title>
+    <style>
+        html, body {
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex;">
+        <div>
+            <canvas style="border-style: solid;"></canvas>
+            <h1 id="angle"></h1>
+            <h1 id="mouse-pos"></h1>
+            <h3>hold click to control</h3>
+        </div>
+        
+        <div>
+            <h1>Turret position</h1>
+            <h1 id="turret-pos"></h1>
+            <button id="test-button" style="position:absolute; top:0; left:30px;">test button</button>
+        </div>
+    </div>
+    
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const testButton =document.getElementById("test-button")
+    const turretPos = document.getElementById("turret-pos")
+    const domain = (new URL(window.location.href));
+    const range = document.getElementById("myRange");
+
+    console.log(domain.host)
+    
+    const socket = io(domain.host);
+    
+    socket.on("connect", () => {
+        socket.emit("ID", "mouse-controller")
+        console.log("CONNECTION")
+    })
+
+    socket.on("gyro-output", (pitch, roll, yaw) => {
+        turretPos.innerHTML = `pitch: ${pitch} roll:${roll} yaw: ${yaw}`
+    })
+</script>
+<script>
+    
+    const angleDis = document.getElementById("angle")
+    const mouseDis = document.getElementById("mouse-pos")
+    const canvas = document.querySelector("canvas")
+    const c = canvas.getContext("2d")
+    canvas.width = 600
+    canvas.height = 600
+    let control = false
+    
+    testButton.addEventListener("click", ()=> {
+        socket.emit("test-order", 5)
+    })
+
+    canvas.addEventListener("click", () => control = !control)
+
+    animate()
+    function animate () {
+        window.requestAnimationFrame(animate)
+
+        if(control) {
+            canvas.addEventListener("mousemove", emitMousePos)
+        } else {
+            canvas.removeEventListener("mousemove", emitMousePos)
+        }
+    
+    }
+
+    function emitMousePos (e) {
+        const mousePos =  getMousePos(canvas, e)
+        // let pitch = (mousePos.y / 20)
+        // let yaw = (mousePos.x / 20)
+
+        let pitch = mousePos.y
+        let yaw = mousePos.x
+
+        // pitch = pitch.toPrecision(1);
+        // yaw = yaw.toPrecision(1);
+        socket.emit("mouse-pos", yaw, pitch)
+        traceMouse(mousePos)
+        displayCoords({pitch, yaw}, mousePos)
+    }
+
+    function displayCoords(angle, mousePos) {
+        angleDis.innerHTML = `pitch: ${angle.pitch} yaw: ${angle.yaw}`
+        mouseDis.innerHTML = `x: ${mousePos.x} y: ${mousePos.y}`
+    }
+
+    function traceMouse (pos) {
+        c.fillStyle = "white"
+        c.fillRect(0, 0, canvas.width, canvas.height)
+        c.beginPath()
+        c.moveTo(pos.x, 0)
+        c.lineTo(pos.x, pos.y)
+        c.lineTo(0, pos.y)
+        c.moveTo(pos.x, canvas.width)
+        c.lineTo(pos.x, pos.y)
+        c.lineTo(canvas.height, pos.y)
+        c.stroke()
+    }   
+
+    function getMousePos(canvas, evt) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+        };
+    }
+
+</script>
+</html>

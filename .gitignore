@@ -1,0 +1,5 @@
+*.exe
+*.o
+client
+.vscode
+node_modules
