@@ -113,15 +113,17 @@ try:
             motor2Speed = round(100 * leftSpeed)
             Motor2.moveB()
 
-        # Third Quadrant
-        elif leftAngle < 0 and leftAngle > -90:
-            motor1Speed = round(remap(asMultiplier, -90, 0, 2047, 0))
-            motor2Speed = round(1023 * leftSpeed)
+        # # Third Quadrant
+        # elif leftAngle < 0 and leftAngle > -90:
+        #     motor1Speed = round(remap(asMultiplier, -90, 0, 2047, 0))
+        #     motor2Speed = round(1023 * leftSpeed)
 
-        # Fourth Quadrant
-        elif leftAngle < -90 and leftAngle >= -180:
-            motor1Speed = round(2047 * leftSpeed)
-            motor2Speed = round(remap(asMultiplier, -180, -90, 0, 1023))
+        # # Fourth Quadrant
+        # elif leftAngle < -90 and leftAngle >= -180:
+        #     motor1Speed = round(2047 * leftSpeed)
+        #     motor2Speed = round(remap(asMultiplier, -180, -90, 0, 1023))
+
+
         print(motor1Speed)
         print(motor2Speed)
         try:
