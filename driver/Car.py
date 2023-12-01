@@ -3,34 +3,34 @@ import time
 import RPi.GPIO as GPIO
 
 
-def remap(x, oMin, oMax, nMin, nMax):
+def remap(changingVariable, oldMin, oldMax, newMin, newMax):
 
     # range check
-    if oMin == oMax:
+    if oldMin == oldMax:
         print("Warning: Zero input range")
         return None
 
-    if nMin == nMax:
+    if newMin == newMax:
         print("Warning: Zero output range")
         return None
 
     # check reversed input range
     reverseInput = False
-    oldMin = min(oMin, oMax)
-    oldMax = max(oMin, oMax)
-    if not oldMin == oMin:
+    oldMin = min(oldMin, oldMax)
+    oldMax = max(oldMin, oldMax)
+    if not oldMin == oldMin:
         reverseInput = True
 
     # check reversed output range
     reverseOutput = False
-    newMin = min(nMin, nMax)
-    newMax = max(nMin, nMax)
-    if not newMin == nMin:
+    newMin = min(newMin, newMax)
+    newMax = max(newMin, newMax)
+    if not newMin == newMin:
         reverseOutput = True
 
-    portion = (x-oldMin)*(newMax-newMin)/(oldMax-oldMin)
+    portion = (changingVariable-oldMin)*(newMax-newMin)/(oldMax-oldMin)
     if reverseInput:
-        portion = (oldMax-x)*(newMax-newMin)/(oldMax-oldMin)
+        portion = (oldMax-changingVariable)*(newMax-newMin)/(oldMax-oldMin)
 
     result = portion + newMin
     if reverseOutput:
@@ -75,6 +75,21 @@ Motor2 = Motor(24, 23, 22)
 Motor3 = Motor(26, 16, 13)
 Motor4 = Motor(12, 5, 6)
 
+
+def carStop():
+    Motor1.stop()
+    Motor2.stop()
+    Motor3.stop()
+    Motor4.stop()
+
+
+def carDrive(m1Speed, m2Speed, m3Speed, m4Speed):
+    Motor1.drive(m1Speed)
+    Motor2.drive(m2Speed)
+    Motor3.drive(m3Speed)
+    Motor4.drive(m4Speed)
+
+
 try:
     @sio.event
     def connect():
@@ -84,62 +99,73 @@ try:
     @sio.event
     def disconnect():
         print('disconnected from server')
-        Motor1.stop()
-        Motor2.stop()
-        Motor3.stop()
-        Motor4.stop()
+        carStop()
 
     @sio.on('drive-orders')
-    def on_message(leftAngle, leftSpeed):
-        asMultiplier = leftAngle * leftSpeed
-
+    def on_message(angle, speed):
+        asMultiplier = angle * speed
+        maxPWM = 100
         # Speed Limiter
-        if leftSpeed < 0.05:
-            motor1Speed = 0
-            motor2Speed = 0
+        if speed < 0.05:
+            carStop
 
         # First Quadrant
-        elif leftAngle >= 0 and leftAngle < 90:
+        elif angle >= 0 and angle < 90:
 
-            motor1Speed = round(100 * leftSpeed)
+            motor1Speed = round(maxPWM * speed)
             Motor1.moveF()
-            motor2Speed = round(remap(asMultiplier, 0, 90, 0, 100))
+            Motor4.moveF()
+            motor2Speed = round(remap(asMultiplier, 0, 90, 0, maxPWM))
             Motor2.moveF()
+            Motor3.moveF()
 
         # Second Quadrant
-        elif leftAngle > 90 and leftAngle <= 180:
-            motor1Speed = round(remap(asMultiplier, 90, 180, 100, 0))
-            Motor1.moveB()
-            motor2Speed = round(100 * leftSpeed)
+        elif angle > 90 and angle <= 180:
+            motor1Speed = round(remap(asMultiplier, 90, 180, maxPWM, 0))
+            Motor1.moveF()
+            Motor4.moveF()
+            motor2Speed = round(maxPWM * speed)
             Motor2.moveB()
+            Motor3.moveB()
 
-        # # Third Quadrant
-        # elif leftAngle < 0 and leftAngle > -90:
-        #     motor1Speed = round(remap(asMultiplier, -90, 0, 2047, 0))
-        #     motor2Speed = round(1023 * leftSpeed)
+        # Third Quadrant
+        elif angle < 0 and angle > -90:
+            motor1Speed = round(remap(asMultiplier, -90, 0, maxPWM, 0))
+            Motor1.moveB()
+            Motor4.moveB()
+            motor2Speed = round(maxPWM * speed)
+            Motor2.moveF()
+            Motor3.moveF()
 
-        # # Fourth Quadrant
-        # elif leftAngle < -90 and leftAngle >= -180:
-        #     motor1Speed = round(2047 * leftSpeed)
-        #     motor2Speed = round(remap(asMultiplier, -180, -90, 0, 1023))
+        # Fourth Quadrant
+        elif angle < -90 and angle >= -180:
+            motor1Speed = round(maxPWM * speed)
+            Motor1.moveB()
+            Motor4.moveB()
+            motor2Speed = round(remap(asMultiplier, -180, -90, 0, maxPWM))
+            Motor2.moveF()
+            Motor3.moveF()
 
+        motor4Speed = motor1Speed
+        motor3Speed = motor2Speed
 
-        print(motor1Speed)
-        print(motor2Speed)
+        print("1: " + motor1Speed + "2: " + motor2Speed +
+              "3: " + motor3Speed + "4: " + motor4Speed)
+
         try:
-            Motor1.drive(motor1Speed)
-            Motor2.drive(motor2Speed)
+            carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
 
         except:
             print("e")
 
-    # sio.connect('http://10.13.82.169:3000')
-    sio.connect('http://192.168.24.11:3000')
+    try:
+        sio.connect('http://10.13.82.169:3000')
+
+    except:
+        sio.connect('http://192.168.24.11:3000')
+
     sio.wait()
 
 except KeyboardInterrupt:
     time.sleep(0.5)
-    Motor1.stop()
-    Motor2.stop()
-    Motor3.stop()
-    Motor4.stop()
+    carStop()
