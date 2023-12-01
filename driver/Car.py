@@ -90,6 +90,42 @@ def carDrive(m1Speed, m2Speed, m3Speed, m4Speed):
     Motor4.drive(m4Speed)
 
 
+def moveLeftF():
+    Motor1.moveF()
+    Motor4.moveF()
+
+
+def moveRightF():
+    Motor2.moveF()
+    Motor3.moveF()
+
+
+def moveLeftB():
+    Motor1.moveB()
+    Motor4.moveB()
+
+
+def moveRightB():
+    Motor2.moveB()
+    Motor3.moveB()
+
+
+def powerMode(x):
+    if x == 1:
+        return 100
+    elif x == 2:
+        return 80
+    elif x == 3:
+        return 60
+    elif x == 4:
+        print("Custom mode activated. Choose the power of each motor(0 - 100)")
+        m1 = input("Power of motor 1: ")
+        m2 = input("Power of motor 2: ")
+        m3 = input("Power of motor 3: ")
+        m4 = input("Power of motor 4: ")
+        return m1, m2, m3, m4
+
+
 try:
     @sio.event
     def connect():
@@ -105,46 +141,40 @@ try:
     def on_message(angle, speed):
         asMultiplier = angle * speed
         maxPWM = 100
+        sMult = round(speed * maxPWM)
+
         # Speed Limiter
         if speed < 0.05:
-            carStop
+            carStop()
 
         # First Quadrant
         elif angle >= 0 and angle < 90:
 
-            motor1Speed = round(maxPWM * speed)
-            Motor1.moveF()
-            Motor4.moveF()
+            motor1Speed = sMult
+            moveLeftF()
             motor2Speed = round(remap(asMultiplier, 0, 90, 0, maxPWM))
-            Motor2.moveF()
-            Motor3.moveF()
+            moveRightB()
 
         # Second Quadrant
         elif angle > 90 and angle <= 180:
             motor1Speed = round(remap(asMultiplier, 90, 180, maxPWM, 0))
-            Motor1.moveF()
-            Motor4.moveF()
-            motor2Speed = round(maxPWM * speed)
-            Motor2.moveB()
-            Motor3.moveB()
+            moveLeftF()
+            motor2Speed = sMult
+            moveRightB()
 
         # Third Quadrant
         elif angle < 0 and angle > -90:
             motor1Speed = round(remap(asMultiplier, -90, 0, maxPWM, 0))
-            Motor1.moveB()
-            Motor4.moveB()
-            motor2Speed = round(maxPWM * speed)
-            Motor2.moveF()
-            Motor3.moveF()
+            moveLeftB()
+            motor2Speed = sMult
+            moveRightF()
 
         # Fourth Quadrant
         elif angle < -90 and angle >= -180:
-            motor1Speed = round(maxPWM * speed)
-            Motor1.moveB()
-            Motor4.moveB()
+            motor1Speed = sMult
+            moveLeftB()
             motor2Speed = round(remap(asMultiplier, -180, -90, 0, maxPWM))
-            Motor2.moveF()
-            Motor3.moveF()
+            moveRightF()
 
         motor4Speed = motor1Speed
         motor3Speed = motor2Speed
@@ -167,5 +197,5 @@ try:
     sio.wait()
 
 except KeyboardInterrupt:
-    time.sleep(0.5)
+    time.sleep(0.2)
     carStop()

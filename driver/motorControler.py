@@ -106,28 +106,28 @@ def LowPowerDrivingMode():
     Motor4.moveF(60)
 
 
-def CustumizedDrivingMode():
+def CustumizedDrivingMode(x):
     # Forward 2 Front wheels
-    Motor1.moveF(100)
-    Motor2.moveF(100)
+    Motor1.moveF(x)
+    Motor2.moveF(x)
     # Backward 2 Front wheels
-    Motor1.moveB(100)
-    Motor2.moveB(100)
+    Motor1.moveB(x)
+    Motor2.moveB(x)
     # Forward 2 rear wheels
-    Motor3.moveF(100)
-    Motor4.moveF(100)
+    Motor3.moveF(x)
+    Motor4.moveF(x)
     # Backward 2 rear wheels
-    Motor3.moveB(100)
-    Motor4.moveB(100)
+    Motor3.moveB(x)
+    Motor4.moveB(x)
     # Forward 2 Right wheels
-    Motor1.moveF(100)
-    Motor3.moveF(100)
+    Motor1.moveF(x)
+    Motor3.moveF(x)
     # Backward 2 Right wheels
-    Motor1.moveB(100)
-    Motor3.moveB(100)
+    Motor1.moveB(x)
+    Motor3.moveB(x)
     # Forward 2 Left wheels
-    Motor2.moveF(100)
-    Motor4.moveF(100)
+    Motor2.moveF(x)
+    Motor4.moveF(x)
     # Backward 2 Left wheels
-    Motor2.moveB(100)
-    Motor4.moveB(100)
+    Motor2.moveB(x)
+    Motor4.moveB(x)
