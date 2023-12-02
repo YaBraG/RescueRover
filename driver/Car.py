@@ -140,7 +140,7 @@ try:
     @sio.on('drive-orders')
     def on_message(angle, speed):
         asMultiplier = angle * speed
-        maxPWM = 80
+        maxPWM = 100
         sMult = round(speed * maxPWM)
         motor1Speed = 0
         motor2Speed = 0
