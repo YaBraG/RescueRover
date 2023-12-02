@@ -112,11 +112,11 @@ def moveRightB():
 
 def powerMode(x):
     if x == 1:
-        return 100,100,100,100
+        return 100, 100, 100, 100
     elif x == 2:
-        return 80,80,80,80
+        return 80, 80, 80, 80
     elif x == 3:
-        return 60,60,60,60
+        return 60, 60, 60, 60
     elif x == 4:
         print("Custom mode activated. Choose the power of each motor(0 - 100)")
         m1 = input("Power of motor 1: ")
@@ -142,6 +142,10 @@ try:
         asMultiplier = angle * speed
         maxPWM = 100
         sMult = round(speed * maxPWM)
+        motor1Speed = 0
+        motor2Speed = 0
+        motor3Speed = 0
+        motor4Speed = 0
 
         # Speed Limiter
         if speed < 0.05:
