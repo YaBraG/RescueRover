@@ -183,8 +183,8 @@ try:
         motor4Speed = motor1Speed
         motor3Speed = motor2Speed
 
-        print("1: " + motor1Speed + "2: " + motor2Speed +
-              "3: " + motor3Speed + "4: " + motor4Speed)
+        print(
+            f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
 
         try:
             carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
