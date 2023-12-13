@@ -139,10 +139,9 @@ try:
 
     @sio.on('drive-orders')
     def on_message(angle, speed, mode):
-        
 
         Mpwm = [4]
-        Mpwm= powerMode(mode)
+        Mpwm = powerMode(mode)
         # print(Mpwm)
 
         asMultiplier = angle * speed
@@ -183,14 +182,14 @@ try:
             motor1Speed = round(remap(asMultiplier, -90, 0, Mpwm[0], 0))
             motor4Speed = round(remap(asMultiplier, -90, 0, Mpwm[3], 0))
             moveLeftB()
-            motor2Speed = Mpwm[1]
-            motor3Speed = Mpwm[2]
+            motor2Speed = sMultM2
+            motor3Speed = sMultM3
             moveRightF()
 
         # Fourth Quadrant
         elif angle < -90 and angle >= -180:
-            motor1Speed = Mpwm[0]
-            motor4Speed = Mpwm[3]
+            motor1Speed = sMultM1
+            motor4Speed = sMultM4
             moveLeftB()
             motor2Speed = round(remap(asMultiplier, -180, -90, 0, Mpwm[1]))
             motor3Speed = round(remap(asMultiplier, -180, -90, 0, Mpwm[2]))
