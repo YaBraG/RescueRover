@@ -145,15 +145,15 @@ try:
         Mpwm= powerMode(mode)
         print(Mpwm)
 
-        # asMultiplier = angle * speed
-        # sMultM1 = round(speed * Mpwm[0])
-        # sMultM2 = round(speed * Mpwm[1])
-        # sMultM3 = round(speed * Mpwm[2])
-        # sMultM4 = round(speed * Mpwm[3])
-        # motor1Speed = 0
-        # motor2Speed = 0
-        # motor3Speed = 0
-        # motor4Speed = 0
+        asMultiplier = angle * speed
+        sMultM1 = round(speed * Mpwm[0])
+        sMultM2 = round(speed * Mpwm[1])
+        sMultM3 = round(speed * Mpwm[2])
+        sMultM4 = round(speed * Mpwm[3])
+        motor1Speed = 0
+        motor2Speed = 0
+        motor3Speed = 0
+        motor4Speed = 0
 
         # # Speed Limiter
         # if speed < 0.05:
