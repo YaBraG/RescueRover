@@ -143,7 +143,7 @@ try:
 
         Mpwm = [4]
         Mpwm= powerMode(mode)
-        print(Mpwm)
+        # print(Mpwm)
 
         asMultiplier = angle * speed
         sMultM1 = round(speed * Mpwm[0])
@@ -196,8 +196,8 @@ try:
             motor3Speed = round(remap(asMultiplier, -180, -90, 0, Mpwm[2]))
             moveRightF()
 
-        # print(
-        #     f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
+        print(
+            f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
 
         # try:
         #     carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
