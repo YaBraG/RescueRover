@@ -185,8 +185,8 @@ try:
 
         # Third Quadrant
         elif angle < -90 and angle > -180:
-            motor1Speed = round(remap(asMultiplier, -180, -90, Mpwm[0], 0))
-            motor4Speed = round(remap(asMultiplier, -180, -90, Mpwm[3], 0))
+            motor1Speed = round(remap(asMultiplier, -180, -90, 0, Mpwm[0]))
+            motor4Speed = round(remap(asMultiplier, -180, -90, 0, Mpwm[3]))
             moveLeftB()
             motor2Speed = sMultM2
             motor3Speed = sMultM3
