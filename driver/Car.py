@@ -15,18 +15,18 @@ def remap(changingVariable, oldMin, oldMax, newMin, newMax):
     #     return None
 
     # check reversed input range
-    # reverseInput = False
-    # oldMin = min(oldMin, oldMax)
-    # oldMax = max(oldMin, oldMax)
-    # if not oldMin == oldMin:
-    #     reverseInput = True
+    reverseInput = False
+    oldMin = min(oldMin, oldMax)
+    oldMax = max(oldMin, oldMax)
+    if not oldMin == oldMin:
+        reverseInput = True
 
-    # # check reversed output range
-    # reverseOutput = False
-    # newMin = min(newMin, newMax)
-    # newMax = max(newMin, newMax)
-    # if not newMin == newMin:
-    #     reverseOutput = True
+    # check reversed output range
+    reverseOutput = False
+    newMin = min(newMin, newMax)
+    newMax = max(newMin, newMax)
+    if not newMin == newMin:
+        reverseOutput = True
 
     portion = (changingVariable-oldMin)*(newMax-newMin)/(oldMax-oldMin)
     if reverseInput:
