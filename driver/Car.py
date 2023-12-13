@@ -140,7 +140,7 @@ try:
     @sio.on('drive-orders')
     def on_message(angle, speed, mode):
 
-        Mpwm = []
+        Mpwm = [4]
         Mpwm[0],Mpwm[1],Mpwm[2],Mpwm[3] = powerMode(mode)
 
         asMultiplier = angle * speed
