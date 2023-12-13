@@ -35,12 +35,12 @@ def remap(changingVariable, oldMin, oldMax, newMin, newMax):
     #     reverseOutput = True
 
     portion = (changingVariable-oldMin)*(newMax-newMin)/div1
-    if reverseInput:
-        portion = (oldMax-changingVariable)*(newMax-newMin)/div2
+    # if reverseInput:
+    #     portion = (oldMax-changingVariable)*(newMax-newMin)/div2
 
     result = portion + newMin
-    if reverseOutput:
-        result = newMax - portion
+    # if reverseOutput:
+    #     result = newMax - portion
     print(result)
     return result
 
