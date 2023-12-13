@@ -191,10 +191,9 @@ try:
             motor1Speed = sMultM1
             motor4Speed = sMultM4
             moveLeftB()
-            motor2Speed = round(remap(asMultiplier, -180, -90, 0, Mpwm[1]))
-            motor3Speed = round(remap(asMultiplier, -180, -90, 0, Mpwm[2]))
+            motor2Speed = round(remap(asMultiplier, 0, -90, 0, Mpwm[1]))
+            motor3Speed = round(remap(asMultiplier, 0, -90, 0, Mpwm[2]))
             moveRightF()
-
 
         print(
             f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
