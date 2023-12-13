@@ -41,7 +41,7 @@ def remap(changingVariable, oldMin, oldMax, newMin, newMax):
     result = portion + newMin
     # if reverseOutput:
     #     result = newMax - portion
-    print(result)
+    # print(result)
     return result
 
 
@@ -200,11 +200,11 @@ try:
             motor2Speed = round(remap(asMultiplier, -90, 0, Mpwm[1], 0))
             motor3Speed = round(remap(asMultiplier, -90, 0, Mpwm[2], 0))
             moveRightF()
-            print(
-                f"| 2 speed: {motor2Speed} | 3 speed: {motor3Speed} | Mult: {asMultiplier} | Mpwm {Mpwm[1]} |")
+            # print(
+            #     f"| 2 speed: {motor2Speed} | 3 speed: {motor3Speed} | Mult: {asMultiplier} | Mpwm {Mpwm[1]} |")
 
-        # print(
-        #     f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
+        print(
+            f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
 
         # try:
         #     carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
