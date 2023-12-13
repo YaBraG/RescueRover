@@ -15,6 +15,8 @@ let multiSpeed = 200
 let sendValues = {}
 
 function setup() {
+    var d = document.getElementById("controller" + 0);
+    var buttons = d.getElementsByClassName("button");
     dispAng = document.getElementById("leftAngle")
     dispSpe = document.getElementById("leftSpeed")
 
@@ -64,6 +66,12 @@ function update () {
     let rightxAxis = controllers[0].axes[2]
     let rightyAxis = -controllers[0].axes[3]
     
+    // let bottonA = controllers[0].buttons[0]
+    // let bottonX = controllers[0].buttons[2]
+    // let bottonY = controllers[0].buttons[3]
+    // let bottonB = controllers[0].buttons[1]
+    sendValues.pwm = 0
+    
     leftAngle = Math.atan2(leftyAxis,leftxAxis)
     leftSpeed = Math.hypot(leftxAxis,leftyAxis)
     rightAngle = Math.atan2(rightyAxis,rightxAxis)
@@ -81,6 +89,19 @@ function update () {
     }
     if (rightSpeed < -1){
         rightSpeed = -1 
+    }
+
+    if(buttonA){
+        sendValues.pwm=100
+    }
+    if(buttonX){
+        sendValues.pwm=80
+    }
+    if(buttonB){
+        sendValues.pwm=60
+    }
+    if(buttonX){
+        sendValues.pwm=10
     }
 
     sendValues.leftSpeed = leftSpeed      

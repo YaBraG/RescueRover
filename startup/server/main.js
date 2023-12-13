@@ -14,8 +14,9 @@ function exec () {
     })
 
     socket.on("drive-control", data=>{
-      io.emit("drive-orders", data.leftAngle, data.leftSpeed)
+      io.emit("drive-orders", data.leftAngle, data.leftSpeed,data.pwm)
       console.log(data.leftSpeed)
+      console.log(data.pwm)
       
     })
     
