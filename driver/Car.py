@@ -164,8 +164,8 @@ try:
             motor1Speed = sMultM1
             motor4Speed = sMultM4
             moveLeftF()
-            motor2Speed = round(remap(asMultiplier, 0.001, 90, 0, Mpwm[1]))
-            motor3Speed = round(remap(asMultiplier, 0.001, 90, 0, Mpwm[2]))
+            motor2Speed = round(remap(asMultiplier, 0, 90, 0, Mpwm[1]))
+            motor3Speed = round(remap(asMultiplier, 0, 90, 0, Mpwm[2]))
             moveRightB()
 
         # Second Quadrant
@@ -179,8 +179,8 @@ try:
 
         # Third Quadrant
         elif angle < -90 and angle >= -180:
-            motor1Speed = round(remap(asMultiplier, -90, -180, Mpwm[0], 0))
-            motor4Speed = round(remap(asMultiplier, -90, -180, Mpwm[3], 0))
+            motor1Speed = round(remap(asMultiplier, -180, -90, Mpwm[0], 0))
+            motor4Speed = round(remap(asMultiplier, -180, -90, Mpwm[3], 0))
             moveLeftB()
             motor2Speed = sMultM2
             motor3Speed = sMultM3
@@ -191,8 +191,8 @@ try:
             motor1Speed = sMultM1
             motor4Speed = sMultM4
             moveLeftB()
-            motor2Speed = round(remap(asMultiplier, 0.001, -90, 0, Mpwm[1]))
-            motor3Speed = round(remap(asMultiplier, 0.001, -90, 0, Mpwm[2]))
+            motor2Speed = round(remap(asMultiplier, -90, 0, 0, Mpwm[1]))
+            motor3Speed = round(remap(asMultiplier, -90, 0, 0, Mpwm[2]))
             moveRightF()
 
         print(
