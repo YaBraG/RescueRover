@@ -27,10 +27,10 @@ def remap(changingVariable, oldMin, oldMax, newMin, newMax):
     newMax = max(newMin, newMax)
     div1=oldMax-oldMin
     div2=oldMax-oldMin
-    if div1==0:
-        div1=+ 0.001
-    if div2==0:
-        div2=+00.1
+    # if div1==0:
+    #     div1=+ 0.001
+    # if div2==0:
+    #     div2=+00.1
     if not newMin == newMin:
         reverseOutput = True
 
@@ -170,14 +170,14 @@ try:
             motor1Speed = sMultM1
             motor4Speed = sMultM4
             moveLeftF()
-            motor2Speed = round(remap(asMultiplier, 0, 90, 0, Mpwm[1]))
-            motor3Speed = round(remap(asMultiplier, 0, 90, 0, Mpwm[2]))
+            motor2Speed = round(remap(asMultiplier, 0, 90, 1, Mpwm[1]))
+            motor3Speed = round(remap(asMultiplier, 0, 90, 1, Mpwm[2]))
             moveRightB()
 
         # Second Quadrant
         elif angle > 90 and angle < 180:
-            motor1Speed = round(remap(asMultiplier, 90, 180, Mpwm[0], 0))
-            motor4Speed = round(remap(asMultiplier, 90, 180, Mpwm[3], 0))
+            motor1Speed = round(remap(asMultiplier, 90, 180, Mpwm[0], 1))
+            motor4Speed = round(remap(asMultiplier, 90, 180, Mpwm[3], 1))
             moveLeftF()
             motor2Speed = sMultM2
             motor3Speed = sMultM3
@@ -185,8 +185,8 @@ try:
 
         # Third Quadrant
         elif angle < -90 and angle > -180:
-            motor1Speed = round(remap(asMultiplier, -180, -90, Mpwm[0], 0))
-            motor4Speed = round(remap(asMultiplier, -180, -90, Mpwm[3], 0))
+            motor1Speed = round(remap(asMultiplier, -180, -90, Mpwm[0], 1))
+            motor4Speed = round(remap(asMultiplier, -180, -90, Mpwm[3], 1))
             moveLeftB()
             motor2Speed = sMultM2
             motor3Speed = sMultM3
@@ -197,8 +197,8 @@ try:
             motor1Speed = sMultM1
             motor4Speed = sMultM4
             moveLeftB()
-            motor2Speed = round(remap(asMultiplier,-90,0,Mpwm[1],0))
-            motor3Speed = round(remap(asMultiplier, -90, 0, Mpwm[2], 0))
+            motor2Speed = round(remap(asMultiplier,-90,0,Mpwm[1],1))
+            motor3Speed = round(remap(asMultiplier, -90, 0, Mpwm[2], 1))
             moveRightF()
             print(
                 f"| 2 speed: {motor2Speed} | 3 speed: {motor3Speed} | Mult: {asMultiplier} | Mpwm {Mpwm[1]} |")
