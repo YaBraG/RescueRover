@@ -41,7 +41,7 @@ def remap(changingVariable, oldMin, oldMax, newMin, newMax):
     result = portion + newMin
     if reverseOutput:
         result = newMax - portion
-
+    print(result)
     return result
 
 
