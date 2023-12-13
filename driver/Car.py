@@ -159,7 +159,7 @@ try:
             carStop()
 
         # First Quadrant
-        elif angle >= 0 and angle < 90:
+        elif angle > 0 and angle < 90:
 
             motor1Speed = sMultM1
             motor4Speed = sMultM4
@@ -169,7 +169,7 @@ try:
             moveRightB()
 
         # Second Quadrant
-        elif angle > 90 and angle <= 180:
+        elif angle > 90 and angle < 180:
             motor1Speed = round(remap(asMultiplier, 90, 180, Mpwm[0], 0))
             motor4Speed = round(remap(asMultiplier, 90, 180, Mpwm[3], 0))
             moveLeftF()
@@ -178,7 +178,7 @@ try:
             moveRightB()
 
         # Third Quadrant
-        elif angle < -90 and angle >= -180:
+        elif angle < -90 and angle > -180:
             motor1Speed = round(remap(asMultiplier, -180, -90, Mpwm[0], 0))
             motor4Speed = round(remap(asMultiplier, -180, -90, Mpwm[3], 0))
             moveLeftB()
@@ -191,7 +191,8 @@ try:
             motor1Speed = sMultM1
             motor4Speed = sMultM4
             moveLeftB()
-            motor2Speed = round(remap(asMultiplier, -90, 0, Mpwm[1], 0))
+            asMultiplier=asMultiplier*-1
+            motor2Speed = round(remap(asMultiplier, 90, 0, Mpwm[1], 0))
             motor3Speed = round(remap(asMultiplier, -90, 0, Mpwm[2], 0))
             moveRightF()
             print(
