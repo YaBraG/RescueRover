@@ -15,18 +15,18 @@ def remap(changingVariable, oldMin, oldMax, newMin, newMax):
     #     return None
 
     # check reversed input range
-    reverseInput = False
-    oldMin = min(oldMin, oldMax)
-    oldMax = max(oldMin, oldMax)
-    if not oldMin == oldMin:
-        reverseInput = True
+    # reverseInput = False
+    # oldMin = min(oldMin, oldMax)
+    # oldMax = max(oldMin, oldMax)
+    # if not oldMin == oldMin:
+    #     reverseInput = True
 
-    # check reversed output range
-    reverseOutput = False
-    newMin = min(newMin, newMax)
-    newMax = max(newMin, newMax)
-    div1=oldMax-oldMin
-    div2=oldMax-oldMin
+    # # check reversed output range
+    # reverseOutput = False
+    # newMin = min(newMin, newMax)
+    # newMax = max(newMin, newMax)
+    div1 = oldMax-oldMin
+    div2 = oldMax-oldMin
     # if div1==0:
     #     div1=+ 0.001
     # if div2==0:
@@ -197,7 +197,7 @@ try:
             motor1Speed = sMultM1
             motor4Speed = sMultM4
             moveLeftB()
-            motor2Speed = round(remap(asMultiplier,-90,0,Mpwm[1],0))
+            motor2Speed = round(remap(asMultiplier, -90, 0, Mpwm[1], 0))
             motor3Speed = round(remap(asMultiplier, -90, 0, Mpwm[2], 0))
             moveRightF()
             print(
