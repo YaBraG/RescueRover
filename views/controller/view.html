@@ -64,21 +64,58 @@ You should have received a copy of the CC0 Public Domain Dedication along with t
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js"></script> -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="controller/socket"></script>
-<script src="controller/interface"></script>
+<script src="controller/interface" defer></script>
 </head>
 <body>
-<h2 id="start">Press a button on your controller to start</h2>
-<main>
-</main>
-<div class="display">
-  <div>
-    <h1>Angle:</h1>
-    <h1 id="leftAngle"></h1>
+  <h2 id="start">Press a button on your controller to start</h2>
+  <main>
+  </main>
+  <div class="display">
+    <div>
+      <h1>Angle:</h1>
+      <h1 id="leftAngle"></h1>
+    </div>
+    <div>
+      <h1>Speed:</h1>
+      <h1 id="leftSpeed"></h1>
+    </div>
+    <div>
+      <label id="l-m1">50</label>
+      <input id="m1" placeholder="VALUE" type="range" max="100" min="0">
+      <label for="m1" id="l-m2">50</label>
+      <input id="m2" placeholder="VALUE" type="range" max="100" min="0">
+      <label for="m1" id="l-m3">50</label>
+      <input id="m3" placeholder="VALUE" type="range" max="100" min="0">
+      <label for="m1" id="l-m4">50</label>
+      <input id="m4" placeholder="VALUE" type="range" max="100" min="0">
+      <button id="submit"> SUBMIT </button>
+    </div>
   </div>
-  <div>
-    <h1>Speed:</h1>
-    <h1 id="leftSpeed"></h1>
-  </div>
-</div>
+<script>
+
+  const m1 = document.getElementById("m1")
+  const m2 = document.getElementById("m2")
+  const m3 = document.getElementById("m3")
+  const m4 = document.getElementById("m4")
+  const button = document.getElementById("submit")
+
+  button.addEventListener("click", (e) => {
+    console.log(m1.value)
+    console.log(m2.value)
+    console.log(m3.value)
+    console.log(m4.value)
+  })
+
+  m1.addEventListener("change", onChangeBnt)
+  m2.addEventListener("change", onChangeBnt)
+  m3.addEventListener("change", onChangeBnt)
+  m4.addEventListener("change", onChangeBnt)
+
+  function onChangeBnt (e) {
+    const label = document.getElementById("l-"+e.srcElement.id)
+    label.innerHTML = document.getElementById(e.srcElement.id).value
+  }
+
+</script>
 </body>
 </html>
