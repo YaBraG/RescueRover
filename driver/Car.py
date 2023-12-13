@@ -25,12 +25,18 @@ def remap(changingVariable, oldMin, oldMax, newMin, newMax):
     reverseOutput = False
     newMin = min(newMin, newMax)
     newMax = max(newMin, newMax)
+    div1=oldMax-oldMin
+    div2=oldMax-oldMin
+    if div1==0:
+        div1=+ 0.001
+    if div2==0:
+        div2=+00.1
     if not newMin == newMin:
         reverseOutput = True
 
-    portion = (changingVariable-oldMin)*(newMax-newMin)/(oldMax-oldMin)
+    portion = (changingVariable-oldMin)*(newMax-newMin)/div1
     if reverseInput:
-        portion = (oldMax-changingVariable)*(newMax-newMin)/(oldMax-oldMin)
+        portion = (oldMax-changingVariable)*(newMax-newMin)/div2
 
     result = portion + newMin
     if reverseOutput:
@@ -191,8 +197,7 @@ try:
             motor1Speed = sMultM1
             motor4Speed = sMultM4
             moveLeftB()
-            asMultiplier=asMultiplier*-1
-            motor2Speed = round(remap(asMultiplier, 90, 0, Mpwm[1], 0))
+            motor2Speed = round(remap(asMultiplier,-90,0,Mpwm[1],0)
             motor3Speed = round(remap(asMultiplier, -90, 0, Mpwm[2], 0))
             moveRightF()
             print(
