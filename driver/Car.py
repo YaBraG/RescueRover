@@ -139,69 +139,70 @@ try:
 
     @sio.on('drive-orders')
     def on_message(angle, speed, mode):
+        print(mode)
 
-        Mpwm = [4]
-        Mpwm[0],Mpwm[1],Mpwm[2],Mpwm[3] = powerMode(mode)
+        # Mpwm = [4]
+        # Mpwm= powerMode(mode)
 
-        asMultiplier = angle * speed
-        sMultM1 = round(speed * Mpwm[0])
-        sMultM2 = round(speed * Mpwm[1])
-        sMultM3 = round(speed * Mpwm[2])
-        sMultM4 = round(speed * Mpwm[3])
-        motor1Speed = 0
-        motor2Speed = 0
-        motor3Speed = 0
-        motor4Speed = 0
+        # asMultiplier = angle * speed
+        # sMultM1 = round(speed * Mpwm[0])
+        # sMultM2 = round(speed * Mpwm[1])
+        # sMultM3 = round(speed * Mpwm[2])
+        # sMultM4 = round(speed * Mpwm[3])
+        # motor1Speed = 0
+        # motor2Speed = 0
+        # motor3Speed = 0
+        # motor4Speed = 0
 
-        # Speed Limiter
-        if speed < 0.05:
-            carStop()
+        # # Speed Limiter
+        # if speed < 0.05:
+        #     carStop()
 
-        # First Quadrant
-        elif angle >= 0 and angle < 90:
+        # # First Quadrant
+        # elif angle >= 0 and angle < 90:
 
-            motor1Speed = sMultM1
-            motor4Speed = sMultM4
-            moveLeftF()
-            motor2Speed = round(remap(asMultiplier, 0, 90, 0, Mpwm[1]))
-            motor3Speed = round(remap(asMultiplier, 0, 90, 0, Mpwm[2]))
-            moveRightB()
+        #     motor1Speed = sMultM1
+        #     motor4Speed = sMultM4
+        #     moveLeftF()
+        #     motor2Speed = round(remap(asMultiplier, 0, 90, 0, Mpwm[1]))
+        #     motor3Speed = round(remap(asMultiplier, 0, 90, 0, Mpwm[2]))
+        #     moveRightB()
 
-        # Second Quadrant
-        elif angle > 90 and angle <= 180:
-            motor1Speed = round(remap(asMultiplier, 90, 180, Mpwm[0], 0))
-            motor4Speed = round(remap(asMultiplier, 90, 180, Mpwm[3], 0))
-            moveLeftF()
-            motor2Speed = sMultM2
-            motor3Speed = sMultM3
-            moveRightB()
+        # # Second Quadrant
+        # elif angle > 90 and angle <= 180:
+        #     motor1Speed = round(remap(asMultiplier, 90, 180, Mpwm[0], 0))
+        #     motor4Speed = round(remap(asMultiplier, 90, 180, Mpwm[3], 0))
+        #     moveLeftF()
+        #     motor2Speed = sMultM2
+        #     motor3Speed = sMultM3
+        #     moveRightB()
 
-        # Third Quadrant
-        elif angle < 0 and angle > -90:
-            motor1Speed = round(remap(asMultiplier, -90, 0, Mpwm[0], 0))
-            motor4Speed = round(remap(asMultiplier, -90, 0, Mpwm[3], 0))
-            moveLeftB()
-            motor2Speed = Mpwm[1]
-            motor3Speed = Mpwm[2]
-            moveRightF()
+        # # Third Quadrant
+        # elif angle < 0 and angle > -90:
+        #     motor1Speed = round(remap(asMultiplier, -90, 0, Mpwm[0], 0))
+        #     motor4Speed = round(remap(asMultiplier, -90, 0, Mpwm[3], 0))
+        #     moveLeftB()
+        #     motor2Speed = Mpwm[1]
+        #     motor3Speed = Mpwm[2]
+        #     moveRightF()
 
-        # Fourth Quadrant
-        elif angle < -90 and angle >= -180:
-            motor1Speed = Mpwm[0]
-            motor4Speed = Mpwm[3]
-            moveLeftB()
-            motor2Speed = round(remap(asMultiplier, -180, -90, 0, Mpwm[1]))
-            motor3Speed = round(remap(asMultiplier, -180, -90, 0, Mpwm[2]))
-            moveRightF()
+        # # Fourth Quadrant
+        # elif angle < -90 and angle >= -180:
+        #     motor1Speed = Mpwm[0]
+        #     motor4Speed = Mpwm[3]
+        #     moveLeftB()
+        #     motor2Speed = round(remap(asMultiplier, -180, -90, 0, Mpwm[1]))
+        #     motor3Speed = round(remap(asMultiplier, -180, -90, 0, Mpwm[2]))
+        #     moveRightF()
 
-        print(
-            f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
+        # print(
+        #     f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
 
-        try:
-            carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
+        # try:
+        #     carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
 
-        except:
-            print("e")
+        # except:
+        #     print("e")
 
     try:
         sio.connect('http://192.168.250.11:3000')
