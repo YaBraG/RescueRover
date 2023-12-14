@@ -20,8 +20,12 @@ function addgamepad(gamepad) {
   controllers[gamepad.index] = gamepad; var d = document.createElement("div");
   d.setAttribute("id", "controller" + gamepad.index);
   var t = document.createElement("h1");
-  t.appendChild(document.createTextNode("gamepad: " + gamepad.id));
+  t.appendChild(document.createTextNode("Gamepad: " + gamepad.id));
   d.appendChild(t);
+  d.style.position='absolute'
+  d.style.left="53%"
+  d.style.top="64%"
+  d.style.fontSize
   var b = document.createElement("div");
   b.className = "buttons";
   for (var i=0; i<gamepad.buttons.length; i++) {
@@ -34,6 +38,7 @@ function addgamepad(gamepad) {
   d.appendChild(b);
   var a = document.createElement("div");
   a.className = "axes";
+
   for (i=0; i<gamepad.axes.length; i++) {
     e = document.createElement("meter");
     e.className = "axis";

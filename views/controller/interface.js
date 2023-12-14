@@ -5,17 +5,17 @@ leftAngle = 0
 leftSpeed = 0
 rightAngle = 0
 rightSpeed = 0
-mode = 0
 
 let dispAng 
 let dispSpe
-
+let powerMode 
+mode = "Normal Mode (80%)"
 
 let motorPWR = {
-    m1:0,
-    m2:0,
-    m3:0,
-    m4:0
+    m1:80,
+    m2:80,
+    m3:80,
+    m4:80
 }
 let multiAng = 1
 let multiSpeed = 200
@@ -25,6 +25,7 @@ let sendValues = {}
 function setup() {
     dispAng = document.getElementById("leftAngle")
     dispSpe = document.getElementById("leftSpeed")
+    powerMode = document.getElementById("power-mode")
 
     createCanvas(WIDTH, HEIGHT);
     stroke(51);
@@ -112,28 +113,28 @@ function update () {
     }
 
     if (pressed) {
-    console.log("Button A Pressed")
+    mode = "Extreme Mode (100)%"
     motorPWR.m1 = 100
     motorPWR.m2 = 100
     motorPWR.m3 = 100
     motorPWR.m4 = 100
     }
     if (pressedB) {
-    console.log("Button B Pressed")
+    mode = "Normal Mode (80%)"
     motorPWR.m1 = 80
     motorPWR.m2 = 80
     motorPWR.m3 = 80
     motorPWR.m4 = 80
     }
     if (pressedX) {
-    console.log("Button X Pressed")
+    mode = "Power Saving Mode (60%)"
     motorPWR.m1 = 60
     motorPWR.m2 = 60
     motorPWR.m3 = 60
     motorPWR.m4 = 60
     }
     if (pressedY) {
-    console.log("Button Y Pressed")
+    mode = "Custom Mode (0-100%)"
     powerSet=false
     }
 
@@ -157,11 +158,12 @@ function update () {
         rightSpeed = -1 
     }
 
+    powerMode.innerText = mode
     sendValues.leftSpeed = leftSpeed      
-    dispSpe.innerText = leftSpeed
+    dispSpe.innerText = Math.round(leftSpeed*1000)/1000
 
     sendValues.leftAngle = leftAngle*(180/Math.PI)
-    dispAng.innerText = leftAngle*(180/Math.PI)
+    dispAng.innerText = Math.round(leftAngle*(180/Math.PI)*1000)/1000
 
     sendValues.mode = motorPWR
 
