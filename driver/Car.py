@@ -2,6 +2,8 @@ import socketio
 import time
 import RPi.GPIO as GPIO
 
+mtest = 0
+
 
 def remap(changingVariable, oldMin, oldMax, newMin, newMax):
 
@@ -115,7 +117,6 @@ def moveRightB():
     Motor2.moveB()
     Motor3.moveB()
 
-test = 0 
 
 try:
     @sio.event
@@ -127,13 +128,14 @@ try:
     def disconnect():
         print('disconnected from server')
         carStop()
-    
+
     @sio.on('drive-orders')
     def on_message(angle, speed, mode):
 
-        if(test > 1):
+        if (mtest < 1):
             print(mode)
-        test =test + 1
+
+        mtest = mtest + 1
         # Mpwm = [4]
         # Mpwm[0] = mode.m1
         # Mpwm[1] = mode.m2
