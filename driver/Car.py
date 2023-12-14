@@ -2,8 +2,6 @@ import socketio
 import time
 import RPi.GPIO as GPIO
 
-mtest = 0
-
 
 def remap(changingVariable, oldMin, oldMax, newMin, newMax):
 
@@ -132,10 +130,8 @@ try:
     @sio.on('drive-orders')
     def on_message(angle, speed, mode):
 
-        if (mtest < 1):
-            print(mode)
+        print(mode)
 
-        mtest = mtest + 1
         # Mpwm = [4]
         # Mpwm[0] = mode.m1
         # Mpwm[1] = mode.m2
