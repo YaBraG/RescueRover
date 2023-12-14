@@ -126,16 +126,19 @@ try:
     def disconnect():
         print('disconnected from server')
         carStop()
-
+    
+    test = 0 
     @sio.on('drive-orders')
     def on_message(angle, speed, mode):
-
-        Mpwm = [4]
-        Mpwm[0] = mode.m1
-        Mpwm[1] = mode.m2
-        Mpwm[2] = mode.m3
-        Mpwm[3] = mode.m4
-        print(Mpwm)
+        if(test > 1):
+            print(mode)
+        test =test + 1
+        # Mpwm = [4]
+        # Mpwm[0] = mode.m1
+        # Mpwm[1] = mode.m2
+        # Mpwm[2] = mode.m3
+        # Mpwm[3] = mode.m4
+        # print(Mpwm)
 
         # asMultiplier = angle * speed
         # sMultM1 = round(speed * Mpwm[0])
