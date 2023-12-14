@@ -130,14 +130,14 @@ try:
     @sio.on('drive-orders')
     def on_message(angle, speed, mode):
 
-        print(mode)
 
-        # Mpwm = [4]
-        # Mpwm[0] = mode.m1
-        # Mpwm[1] = mode.m2
-        # Mpwm[2] = mode.m3
-        # Mpwm[3] = mode.m4
-        # print(Mpwm)
+
+        Mpwm = [4]
+        Mpwm[0] = mode["m1"]
+        Mpwm[1] = mode["m2"]
+        Mpwm[2] = mode["m3"]
+        Mpwm[3] = mode["m4"]
+        print(Mpwm)
 
         # asMultiplier = angle * speed
         # sMultM1 = round(speed * Mpwm[0])
