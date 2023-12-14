@@ -115,6 +115,7 @@ def moveRightB():
     Motor2.moveB()
     Motor3.moveB()
 
+test = 0 
 
 try:
     @sio.event
@@ -127,9 +128,9 @@ try:
         print('disconnected from server')
         carStop()
     
-    test = 0 
     @sio.on('drive-orders')
     def on_message(angle, speed, mode):
+
         if(test > 1):
             print(mode)
         test =test + 1
