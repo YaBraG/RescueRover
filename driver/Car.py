@@ -53,7 +53,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 PORT_NAME = "/dev/ttyS0"
-lidar = RPLidar(None, PORT_NAME)
+lidar = RPLidar(None, PORT_NAME, 115200, timeout=3, logging=True)
 
 max_distance = 0
 scan_data = [0]*360
