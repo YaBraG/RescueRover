@@ -63,9 +63,8 @@ def process_data(data):
 
 scan_data = [0]*360
 
-sio.connect('http://10.13.82.169:3000')
-sio.wait()
 
+sio.connect('http://10.13.82.169:3000')
 try:
     print("STUFF IN SOCKET")
 
@@ -86,5 +85,8 @@ try:
     def disconnect():
         print('disconnected from server')
 
+
 except KeyboardInterrupt:
     time.sleep(0.2)
+
+sio.wait()
