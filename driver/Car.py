@@ -217,13 +217,13 @@ try:
                 # print(
                 #     f"| 2 speed: {motor2Speed} | 3 speed: {motor3Speed} | Mult: {asMultiplier} | Mpwm {Mpwm[1]} |")
 
-            print(
-                f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
+            # print(
+                # f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
 
             try:
 
                 carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
-                sio.emit("lidar", cart)
+                # sio.emit("lidar", cart)
 
             except:
                 print("Error")
@@ -244,9 +244,9 @@ try:
         sio.wait()
 
     # for scan in lidar.iter_scans():
-        for (_, angle, distance) in scan:
-            scan_data[min([359, floor(angle)])] = distance
-        cart = process_data(scan_data)
+        # for (_, angle, distance) in scan:
+        #     scan_data[min([359, floor(angle)])] = distance
+        # cart = process_data(scan_data)
 
 
 except KeyboardInterrupt:
