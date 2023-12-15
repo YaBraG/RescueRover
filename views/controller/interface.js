@@ -48,6 +48,18 @@ function draw() {
         }
     pop()
 }
+let lidar = []
+
+socket.on("lidar-data", data=> {
+    lidar = data
+})
+function updataLidar () {
+    let offset={x:800, y:800}
+    lidar.forEach(([x,y])=>{
+        triangle(x*5-offset.x,y*5-offset.y, 4);
+    })
+}
+
 
 function draw() {
     background(220);
@@ -62,6 +74,7 @@ function draw() {
     
     if(controllers[0]){
         update();
+        updataLidar();
     }
     pop()
 }
@@ -171,7 +184,5 @@ function update () {
         socket.emit('drive-control', sendValues)
     }
 
-    socket.on("lidar-data", data=> {
-        console.log(data)
-    })
+    
 }

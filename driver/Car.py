@@ -1,6 +1,8 @@
-import socketio
 import time
+import socketio
 import RPi.GPIO as GPIO
+from math import cos, sin, pi, floor
+from adafruit_rplidar import RPLidar
 
 
 def remap(changingVariable, oldMin, oldMax, newMin, newMax):
@@ -48,6 +50,11 @@ def remap(changingVariable, oldMin, oldMax, newMin, newMax):
 sio = socketio.Client()
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
+PORT_NAME = "/dev/ttyS0"
+lidar = RPLidar(None, PORT_NAME)
+
+max_distance = 0
+scan_data = [0]*360
 
 
 class Motor():
@@ -80,6 +87,22 @@ Motor1 = Motor(4, 17, 27)
 Motor2 = Motor(24, 23, 22)
 Motor3 = Motor(26, 16, 13)
 Motor4 = Motor(12, 6, 7)
+
+
+def process_data(data):
+    global max_distance
+    d = []
+    for angle in range(360):
+        distance = data[angle]
+        if distance > 0:
+            max_distance = max([min([5000, distance]), max_distance])
+            radians = angle * pi / 180.0
+            x = distance * cos(radians)
+            y = distance * sin(radians)
+            point = (160 + int(x / max_distance * 119),
+                     120 + int(y / max_distance * 119))
+            d.append(point)
+    return d
 
 
 def carStop():
@@ -126,9 +149,17 @@ try:
     def disconnect():
         print('disconnected from server')
         carStop()
+        lidar.stop()
+        lidar.disconnect()
 
     @sio.on('drive-orders')
     def on_message(angle, speed, mode):
+
+        for scan in lidar.iter_scans():
+            for (_, angle, distance) in scan:
+                scan_data[min([359, floor(angle)])] = distance
+            cart = process_data(scan_data)
+            sio.emit("lidar", cart)
 
         asMultiplier = angle * speed
         sMultM1 = round(speed * mode['m1'])
@@ -183,8 +214,8 @@ try:
             # print(
             #     f"| 2 speed: {motor2Speed} | 3 speed: {motor3Speed} | Mult: {asMultiplier} | Mpwm {Mpwm[1]} |")
 
-        print(
-            f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
+        # print(
+            # f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
 
         try:
             carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
@@ -193,13 +224,16 @@ try:
             print("e")
 
     try:
-        sio.connect('http://192.168.250.11:3000')
+        sio.connect('http://10.13.82.169:3000')
 
     except:
-        sio.connect('http://10.13.82.169:3000')
+        sio.connect('http://192.168.250.11:3000')
 
     sio.wait()
 
 except KeyboardInterrupt:
+    print("Thank You For Comming :)")
     time.sleep(0.2)
     carStop()
+    lidar.stop()
+    lidar.disconnect()

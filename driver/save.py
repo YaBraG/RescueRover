@@ -82,6 +82,14 @@ try:
         lidar.stop()
         lidar.disconnect()
 
+    try:
+        sio.connect('http://192.168.250.11:3000')
+
+    except:
+        sio.connect('http://10.13.82.169:3000')
+
+    sio.wait()
+
 
 except KeyboardInterrupt:
     time.sleep(0.2)
