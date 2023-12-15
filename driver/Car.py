@@ -1,5 +1,6 @@
-import os
-os.chdir('/home/pi/RescueRover/driver')
+# #!/usrbin/env python
+# import os
+# os.chdir('/path/to/home/pi/RescueRover/driver')
 
 import time
 import socketio
