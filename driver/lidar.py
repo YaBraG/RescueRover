@@ -60,6 +60,7 @@ def process_data(data):
     pygame.display.update()
     return data
 
+
 scan_data = [0]*360
 
 try:
@@ -75,10 +76,11 @@ try:
             cart = process_data(scan_data)
             sio.emit("lidar", cart)
 
-
     @sio.event
     def disconnect():
         print('disconnected from server')
+        lidar.stop()
+        lidar.disconnect()
 
     try:
         sio.connect('http://192.168.250.11:3000')
