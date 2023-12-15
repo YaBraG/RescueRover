@@ -16,16 +16,16 @@ Licensed under the MIT license.
 All text above must be included in any redistribution.
 """
 import socketio
-import os
+# import os
 from math import cos, sin, pi, floor
-import pygame
+# import pygame
 from adafruit_rplidar import RPLidar
 import time
 
 sio = socketio.Client()
 
 # Set up pygame and the display
-os.putenv('SDL_FBDEV', '/dev/fb1')
+# os.putenv('SDL_FBDEV', '/dev/fb1')
 # pygame.init()
 # lcd = pygame.display.set_mode((320, 240))
 # pygame.mouse.set_visible(False)
