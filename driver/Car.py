@@ -48,8 +48,10 @@ def remap(changingVariable, oldMin, oldMax, newMin, newMax):
 
 
 sio = socketio.Client()
+
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
+
 PORT_NAME = "/dev/ttyS0"
 lidar = RPLidar(None, PORT_NAME)
 
@@ -144,22 +146,14 @@ try:
     def connect():
         print('connection established')
         sio.emit("ID", 'RescueRover')
-
-    @sio.event
-    def disconnect():
-        print('disconnected from server')
-        carStop()
-        lidar.stop()
-        lidar.disconnect()
-
-    @sio.on('drive-orders')
-    def on_message(angle, speed, mode):
-
         for scan in lidar.iter_scans():
             for (_, angle, distance) in scan:
                 scan_data[min([359, floor(angle)])] = distance
-            cart = process_data(scan_data)
-            sio.emit("lidar", cart)
+        cart = process_data(scan_data)
+        sio.emit("lidar", cart)
+
+    @sio.on('drive-orders')
+    def on_message(angle, speed, mode):
 
         asMultiplier = angle * speed
         sMultM1 = round(speed * mode['m1'])
@@ -222,6 +216,13 @@ try:
 
         except:
             print("e")
+
+    @sio.event
+    def disconnect():
+        print('disconnected from server')
+        carStop()
+        lidar.stop()
+        lidar.disconnect()
 
     try:
         sio.connect('http://10.13.82.169:3000')
