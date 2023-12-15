@@ -107,6 +107,14 @@ def process_data(data):
     return d
 
 
+def lidar_scan():
+    for scan in lidar.iter_scans():
+        for (_, angle, distance) in scan:
+            scan_data[min([359, floor(angle)])] = distance
+    cart = process_data(scan_data)
+    sio.emit("lidar", cart)
+
+
 def carStop():
     Motor1.stop()
     Motor2.stop()
@@ -146,11 +154,6 @@ try:
     def connect():
         print('connection established')
         sio.emit("ID", 'RescueRover')
-        for scan in lidar.iter_scans():
-            for (_, angle, distance) in scan:
-                scan_data[min([359, floor(angle)])] = distance
-        cart = process_data(scan_data)
-        sio.emit("lidar", cart)
 
     @sio.on('drive-orders')
     def on_message(angle, speed, mode):
@@ -213,9 +216,10 @@ try:
 
         try:
             carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
+            lidar_scan()
 
         except:
-            print("e")
+            print("Error")
 
     @sio.event
     def disconnect():
