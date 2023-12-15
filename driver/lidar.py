@@ -68,7 +68,7 @@ try:
     def connect():
         print('connection established')
         sio.emit("ID", 'RescueRover')
-        print(lidar.info)
+        # print(lidar.info)
 
         for scan in lidar.iter_scans():
             for (_, angle, distance) in scan:
