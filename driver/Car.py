@@ -246,7 +246,7 @@ try:
         # lidar.disconnect()
 
     try:
-        sio.connect('http://10.13.82.169:3000')
+        sio.connect('http://192.168.0.153:3000')
 
     except:
         sio.connect('http://192.168.250.11:3000')
