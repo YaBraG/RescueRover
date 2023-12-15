@@ -34,7 +34,6 @@ sio = socketio.Client()
 
 # Setup the RPLidar
 PORT_NAME = "/dev/ttyS0"
-# PORT_NAME = "/dev/ttyUSB0"
 lidar = RPLidar(None, PORT_NAME)
 
 # used to scale data to fit on the screen
@@ -82,6 +81,14 @@ try:
         print('disconnected from server')
         lidar.stop()
         lidar.disconnect()
+
+    try:
+        sio.connect('http://192.168.250.11:3000')
+
+    except:
+        sio.connect('http://10.13.82.169:3000')
+
+    sio.wait()
 
 
 except KeyboardInterrupt:
