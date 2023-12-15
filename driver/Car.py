@@ -154,6 +154,7 @@ try:
     def connect():
         print('connection established')
         sio.emit("ID", 'RescueRover')
+        lidar_scan()
 
     @sio.on('drive-orders')
     def on_message(angle, speed, mode):
@@ -216,7 +217,7 @@ try:
 
         try:
             carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
-            lidar_scan()
+            
 
         except:
             print("Error")
