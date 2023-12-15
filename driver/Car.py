@@ -1,10 +1,10 @@
-from adafruit_rplidar import RPLidar
-from math import cos, sin, pi, floor
-import RPi.GPIO as GPIO
-import socketio
-import time
 import os
 os.chdir('/path/to/home/pi/RescueRover')
+import time
+import socketio
+import RPi.GPIO as GPIO
+from math import cos, sin, pi, floor
+from adafruit_rplidar import RPLidar
 
 
 def remap(changingVariable, oldMin, oldMax, newMin, newMax):
