@@ -95,7 +95,7 @@ class Motor():
 Motor1 = Motor(4, 17, 27)
 Motor2 = Motor(24, 23, 22)
 Motor3 = Motor(26, 16, 13)
-Motor4 = Motor(12, 7, 6)
+Motor4 = Motor(12, 5, 6)
 
 
 # def process_data(data):

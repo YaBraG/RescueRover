@@ -53,6 +53,7 @@ let lidar = []
 
 socket.on("lidar-data", data=> {
     lidar = data
+    console.log(lidar)
 })
 function updataLidar () {
     let offset={x:800, y:800}
