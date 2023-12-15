@@ -151,97 +151,103 @@ def moveRightB():
 
 
 try:
-    @sio.event
-    def connect():
-        print('connection established')
-        sio.emit("ID", 'RescueRover')
+    for scan in lidar.iter_scans():
+        @sio.event
+        def connect():
+            print('connection established')
+            sio.emit("ID", 'RescueRover')
 
-    @sio.on('drive-orders')
-    def on_message(angle, speed, mode):
+        @sio.on('drive-orders')
+        def on_message(angle, speed, mode):
 
-        asMultiplier = angle * speed
-        sMultM1 = round(speed * mode['m1'])
-        sMultM2 = round(speed * mode['m2'])
-        sMultM3 = round(speed * mode['m3'])
-        sMultM4 = round(speed * mode['m4'])
-        motor1Speed = 0
-        motor2Speed = 0
-        motor3Speed = 0
-        motor4Speed = 0
+            asMultiplier = angle * speed
+            sMultM1 = round(speed * mode['m1'])
+            sMultM2 = round(speed * mode['m2'])
+            sMultM3 = round(speed * mode['m3'])
+            sMultM4 = round(speed * mode['m4'])
+            motor1Speed = 0
+            motor2Speed = 0
+            motor3Speed = 0
+            motor4Speed = 0
 
-        # Speed Limiter
-        if speed < 0.05:
-            carStop()
+            # Speed Limiter
+            if speed < 0.05:
+                carStop()
 
-        # First Quadrant
-        elif angle > 0 and angle < 90:
+            # First Quadrant
+            elif angle > 0 and angle < 90:
 
-            motor1Speed = sMultM1
-            motor4Speed = sMultM4
-            moveLeftF()
-            motor2Speed = round(remap(asMultiplier, 0, 90, 0, mode['m2']))
-            motor3Speed = round(remap(asMultiplier, 0, 90, 0, mode['m3']))
-            moveRightB()
+                motor1Speed = sMultM1
+                motor4Speed = sMultM4
+                moveLeftF()
+                motor2Speed = round(remap(asMultiplier, 0, 90, 0, mode['m2']))
+                motor3Speed = round(remap(asMultiplier, 0, 90, 0, mode['m3']))
+                moveRightB()
 
-        # Second Quadrant
-        elif angle > 90 and angle < 180:
-            motor1Speed = round(remap(asMultiplier, 90, 180, mode['m1'], 0))
-            motor4Speed = round(remap(asMultiplier, 90, 180, mode['m4'], 0))
-            moveLeftF()
-            motor2Speed = sMultM2
-            motor3Speed = sMultM3
-            moveRightB()
+            # Second Quadrant
+            elif angle > 90 and angle < 180:
+                motor1Speed = round(
+                    remap(asMultiplier, 90, 180, mode['m1'], 0))
+                motor4Speed = round(
+                    remap(asMultiplier, 90, 180, mode['m4'], 0))
+                moveLeftF()
+                motor2Speed = sMultM2
+                motor3Speed = sMultM3
+                moveRightB()
 
-        # Third Quadrant
-        elif angle < -90 and angle > -180:
-            motor1Speed = round(remap(asMultiplier, -180, -90, 0, mode['m1']))
-            motor4Speed = round(remap(asMultiplier, -180, -90, 0, mode['m4']))
-            moveLeftB()
-            motor2Speed = sMultM2
-            motor3Speed = sMultM3
-            moveRightF()
+            # Third Quadrant
+            elif angle < -90 and angle > -180:
+                motor1Speed = round(
+                    remap(asMultiplier, -180, -90, 0, mode['m1']))
+                motor4Speed = round(
+                    remap(asMultiplier, -180, -90, 0, mode['m4']))
+                moveLeftB()
+                motor2Speed = sMultM2
+                motor3Speed = sMultM3
+                moveRightF()
 
-        # Fourth Quadrant
-        elif angle < 0 and angle > -90:
-            motor1Speed = sMultM1
-            motor4Speed = sMultM4
-            moveLeftB()
-            motor2Speed = round(remap(asMultiplier, -90, 0, mode['m2'], 0))
-            motor3Speed = round(remap(asMultiplier, -90, 0, mode['m3'], 0))
-            moveRightF()
+            # Fourth Quadrant
+            elif angle < 0 and angle > -90:
+                motor1Speed = sMultM1
+                motor4Speed = sMultM4
+                moveLeftB()
+                motor2Speed = round(remap(asMultiplier, -90, 0, mode['m2'], 0))
+                motor3Speed = round(remap(asMultiplier, -90, 0, mode['m3'], 0))
+                moveRightF()
+                # print(
+                #     f"| 2 speed: {motor2Speed} | 3 speed: {motor3Speed} | Mult: {asMultiplier} | Mpwm {Mpwm[1]} |")
+
             # print(
-            #     f"| 2 speed: {motor2Speed} | 3 speed: {motor3Speed} | Mult: {asMultiplier} | Mpwm {Mpwm[1]} |")
+                # f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
 
-        # print(
-            # f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
+            try:
+
+                carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
+                sio.emit("lidar", cart)
+
+            except:
+                print("Error")
+
+        @sio.event
+        def disconnect():
+            print('disconnected from server')
+            carStop()
+            lidar.stop()
+            lidar.disconnect()
 
         try:
-
-            carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
+            sio.connect('http://10.13.82.169:3000')
 
         except:
-            print("Error")
+            sio.connect('http://192.168.250.11:3000')
 
-    @sio.event
-    def disconnect():
-        print('disconnected from server')
-        carStop()
-        lidar.stop()
-        lidar.disconnect()
+        sio.wait()
 
-    try:
-        sio.connect('http://10.13.82.169:3000')
-
-    except:
-        sio.connect('http://192.168.250.11:3000')
-
-    sio.wait()
-
-    for scan in lidar.iter_scans():
+    # for scan in lidar.iter_scans():
         for (_, angle, distance) in scan:
             scan_data[min([359, floor(angle)])] = distance
         cart = process_data(scan_data)
-        sio.emit("lidar", cart)
+
 
 except KeyboardInterrupt:
     print("Thank You For Comming :)")
