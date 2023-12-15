@@ -45,7 +45,7 @@ max_distance = 0
 def process_data(data):
     global max_distance
     lcd.fill((0, 0, 0))
-    data = []
+    d = []
     for angle in range(360):
         distance = data[angle]
         if distance > 0:                  # ignore initially ungathered data points
@@ -55,10 +55,10 @@ def process_data(data):
             y = distance * sin(radians)
             point = (160 + int(x / max_distance * 119),
                      120 + int(y / max_distance * 119))
-            data.append(point)
+            d.append(point)
             lcd.set_at(point, pygame.Color(255, 255, 255))
     pygame.display.update()
-    return data
+    return d
 
 
 scan_data = [0]*360
