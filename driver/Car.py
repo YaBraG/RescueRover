@@ -231,6 +231,7 @@ try:
 
         if (motor1):
             GPIO.output(lidar1, GPIO.HIGH)
+            print("LIDAR On")
         else:
             GPIO.output(lidar1, GPIO.LOW)
             # sio.emit("lidar", cart)
