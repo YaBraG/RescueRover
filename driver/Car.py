@@ -155,7 +155,7 @@ def moveRightB():
 
 
 try:
-    for scan in lidar.iter_scans():
+    # for scan in lidar.iter_scans():
         @sio.event
         def connect():
             print('connection established')
