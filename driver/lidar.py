@@ -44,7 +44,7 @@ max_distance = 0
 
 def process_data(data):
     global max_distance
-    lcd.fill((0, 0, 0))
+    # lcd.fill((0, 0, 0))
     d = []
     for angle in range(360):
         distance = data[angle]
