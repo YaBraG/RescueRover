@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import socketio
 import time
 import os
-os.chdir('/path/to/home/pi/RescueRover/driver')
+os.chdir('/path/to/home/pi/RescueRover')
 
 
 def remap(changingVariable, oldMin, oldMax, newMin, newMax):
