@@ -216,8 +216,12 @@ try:
             # f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
 
         try:
-            lidar_scan(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
-            # carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
+            for scan in lidar.iter_scans():
+                for (_, angle, distance) in scan:
+                    scan_data[min([359, floor(angle)])] = distance
+            cart = process_data(scan_data)
+            sio.emit("lidar", cart)
+            carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
 
         except:
             print("Error")
