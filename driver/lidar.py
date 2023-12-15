@@ -63,15 +63,12 @@ def process_data(data):
 
 scan_data = [0]*360
 
-
-sio.connect('http://10.13.82.169:3000')
 try:
-    print("STUFF IN SOCKET")
-
     @sio.event
     def connect():
         print('connection established')
         sio.emit("ID", 'RescueRover')
+
         print(lidar.info)
 
         while (True):
@@ -85,8 +82,14 @@ try:
     def disconnect():
         print('disconnected from server')
 
+    try:
+        sio.connect('http://192.168.250.11:3000')
+
+    except:
+        sio.connect('http://10.13.82.169:3000')
+
+    sio.wait()
+
 
 except KeyboardInterrupt:
     time.sleep(0.2)
-
-sio.wait()
