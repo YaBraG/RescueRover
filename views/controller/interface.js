@@ -170,4 +170,8 @@ function update () {
     if(powerSet){
         socket.emit('drive-control', sendValues)
     }
+
+    socket.on("lidar-data", data=> {
+        console.log(data)
+    })
 }

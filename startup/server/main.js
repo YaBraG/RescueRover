@@ -19,7 +19,9 @@ function exec () {
       
       
     })
-    
+    socket.on("lidar", (cart_data)=> {
+      io.emit("lidar-data", cart_data)
+    })
 
   });
   
