@@ -107,12 +107,13 @@ def process_data(data):
     return d
 
 
-def lidar_scan():
+def lidar_scan(m1, m2, m3, m4):
     for scan in lidar.iter_scans():
         for (_, angle, distance) in scan:
             scan_data[min([359, floor(angle)])] = distance
     cart = process_data(scan_data)
     sio.emit("lidar", cart)
+    carDrive(m1, m2, m3, m4)
 
 
 def carStop():
@@ -216,8 +217,8 @@ try:
             # f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
 
         try:
-            carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
-            
+            lidar_scan(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
+            # carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
 
         except:
             print("Error")
