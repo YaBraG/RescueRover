@@ -67,6 +67,8 @@ sio.connect('http://10.13.82.169:3000')
 sio.wait()
 
 try:
+    print("STUFF IN SOCKET")
+
     @sio.event
     def connect():
         print('connection established')
