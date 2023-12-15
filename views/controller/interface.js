@@ -9,6 +9,7 @@ rightSpeed = 0
 let dispAng 
 let dispSpe
 let powerMode 
+let motor = false
 mode = "Normal Mode (80%)"
 
 let motorPWR = {
@@ -101,11 +102,15 @@ function update () {
     var buttonB = controller.buttons[1];
     var buttonX = controller.buttons[2];
     var buttonY = controller.buttons[3];
+    var buttonL1 = controller.buttons[4];
+    var buttonR1 = controller.buttons[5];
 
     var pressed = buttonA == 1.0;
     var pressedB = buttonB == 1.0;
     var pressedX = buttonX == 1.0;
     var pressedY = buttonY == 1.0;
+    var pressedR1 = buttonR1 == 1.0;
+    var pressedL1 = buttonR1 == 1.0;
 
 
     if (typeof(buttonA) == "object") {
@@ -123,6 +128,14 @@ function update () {
     if (typeof(buttonY) == "object") {
     pressedY = buttonY.pressed;
     buttonY = buttonY.value;
+    }
+    if (typeof(buttonR1) == "object") {
+    pressedR1 = buttonR1.pressed;
+    buttonR1 = buttonR1.value;
+    }
+    if (typeof(buttonL1) == "object") {
+    pressedL1 = buttonL1.pressed;
+    buttonL1 = buttonL1.value;
     }
 
     if (pressed) {
@@ -149,6 +162,12 @@ function update () {
     if (pressedY) {
     mode = "Custom Mode (0-100%)"
     powerSet=false
+    }
+    if (pressedR1) {
+    motor=true
+    }
+    if (pressedL1) {
+    motor=false
     }
 
     
@@ -179,6 +198,7 @@ function update () {
     dispAng.innerText = Math.round(leftAngle*(180/Math.PI)*1000)/1000
 
     sendValues.mode = motorPWR
+    sendValues.motor = motor
 
     if(powerSet){
         socket.emit('drive-control', sendValues)
