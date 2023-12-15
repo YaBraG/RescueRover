@@ -1,5 +1,6 @@
 import os
-os.chdir('/path/to/home/pi/RescueRover')
+os.chdir('/home/pi/RescueRover/driver')
+
 import time
 import socketio
 import RPi.GPIO as GPIO
