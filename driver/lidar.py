@@ -33,8 +33,8 @@ sio = socketio.Client()
 # pygame.display.update()
 
 # Setup the RPLidar
-# PORT_NAME = "/dev/ttyS0"
-PORT_NAME = "/dev/ttyUSB0"
+PORT_NAME = "/dev/ttyS0"
+# PORT_NAME = "/dev/ttyUSB0"
 lidar = RPLidar(None, PORT_NAME)
 
 # used to scale data to fit on the screen
