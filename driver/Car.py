@@ -63,6 +63,7 @@ GPIO.setwarnings(False)
 # max_distance = 0
 # scan_data = [0]*360
 GPIO.setup(lidar1, GPIO.OUT)
+GPIO.output(lidar1, GPIO.HIGH)
 
 
 class Motor():
@@ -165,7 +166,7 @@ try:
 
     @sio.on('drive-orders')
     def on_message(angle, speed, mode, motor):
-
+        motor1 = motor
         asMultiplier = angle * speed
         sMultM1 = round(speed * mode['m1'])
         sMultM2 = round(speed * mode['m2'])
@@ -223,12 +224,12 @@ try:
             # print(
             #     f"| 2 speed: {motor2Speed} | 3 speed: {motor3Speed} | Mult: {asMultiplier} | Mpwm {Mpwm[1]} |")
 
-        # print(
-            # f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
+        print(
+            f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
 
         carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
 
-        if (motor):
+        if (motor1):
             GPIO.output(lidar1, GPIO.HIGH)
         else:
             GPIO.output(lidar1, GPIO.LOW)
