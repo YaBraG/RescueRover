@@ -60,7 +60,6 @@ def process_data(data):
     pygame.display.update()
     return data
 
-
 scan_data = [0]*360
 
 try:
@@ -68,15 +67,14 @@ try:
     def connect():
         print('connection established')
         sio.emit("ID", 'RescueRover')
-
         print(lidar.info)
 
-        while (True):
-            for scan in lidar.iter_scans():
-                for (_, angle, distance) in scan:
-                    scan_data[min([359, floor(angle)])] = distance
-                cart = process_data(scan_data)
-                sio.emit("lidar", cart)
+        for scan in lidar.iter_scans():
+            for (_, angle, distance) in scan:
+                scan_data[min([359, floor(angle)])] = distance
+            cart = process_data(scan_data)
+            sio.emit("lidar", cart)
+
 
     @sio.event
     def disconnect():
