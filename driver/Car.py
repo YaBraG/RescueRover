@@ -6,7 +6,7 @@ import time
 import socketio
 import RPi.GPIO as GPIO
 from math import cos, sin, pi, floor
-from adafruit_rplidar import RPLidar
+# from adafruit_rplidar import RPLidar
 
 
 def remap(changingVariable, oldMin, oldMax, newMin, newMax):
@@ -59,8 +59,8 @@ GPIO.setwarnings(False)
 # PORT_NAME = "/dev/ttyS0"
 # lidar = RPLidar(None, PORT_NAME)
 
-max_distance = 0
-scan_data = [0]*360
+# max_distance = 0
+# scan_data = [0]*360
 
 
 class Motor():
@@ -95,29 +95,29 @@ Motor3 = Motor(26, 16, 13)
 Motor4 = Motor(12, 7, 6)
 
 
-def process_data(data):
-    global max_distance
-    d = []
-    for angle in range(360):
-        distance = data[angle]
-        if distance > 0:
-            max_distance = max([min([5000, distance]), max_distance])
-            radians = angle * pi / 180.0
-            x = distance * cos(radians)
-            y = distance * sin(radians)
-            point = (160 + int(x / max_distance * 119),
-                     120 + int(y / max_distance * 119))
-            d.append(point)
-    return d
+# def process_data(data):
+#     global max_distance
+#     d = []
+#     for angle in range(360):
+#         distance = data[angle]
+#         if distance > 0:
+#             max_distance = max([min([5000, distance]), max_distance])
+#             radians = angle * pi / 180.0
+#             x = distance * cos(radians)
+#             y = distance * sin(radians)
+#             point = (160 + int(x / max_distance * 119),
+#                      120 + int(y / max_distance * 119))
+#             d.append(point)
+#     return d
 
 
-def lidar_scan(m1, m2, m3, m4):
-    for scan in lidar.iter_scans():
-        for (_, angle, distance) in scan:
-            scan_data[min([359, floor(angle)])] = distance
-    cart = process_data(scan_data)
-    sio.emit("lidar", cart)
-    carDrive(m1, m2, m3, m4)
+# def lidar_scan(m1, m2, m3, m4):
+#     for scan in lidar.iter_scans():
+#         for (_, angle, distance) in scan:
+#             scan_data[min([359, floor(angle)])] = distance
+#     cart = process_data(scan_data)
+#     sio.emit("lidar", cart)
+#     carDrive(m1, m2, m3, m4)
 
 
 def carStop():
@@ -236,8 +236,8 @@ try:
         def disconnect():
             print('disconnected from server')
             carStop()
-            lidar.stop()
-            lidar.disconnect()
+            # lidar.stop()
+            # lidar.disconnect()
 
         try:
             sio.connect('http://10.13.82.169:3000')
@@ -257,5 +257,5 @@ except KeyboardInterrupt:
     print("Thank You For Comming :)")
     time.sleep(0.2)
     carStop()
-    lidar.stop()
-    lidar.disconnect()
+    # lidar.stop()
+    # lidar.disconnect()
