@@ -216,11 +216,7 @@ try:
             # f"1: {motor1Speed} | 2: {motor2Speed} | 3: {motor3Speed} | 4: {motor4Speed}")
 
         try:
-            for scan in lidar.iter_scans():
-                for (_, angle, distance) in scan:
-                    scan_data[min([359, floor(angle)])] = distance
-            cart = process_data(scan_data)
-            sio.emit("lidar", cart)
+
             carDrive(motor1Speed, motor2Speed, motor3Speed, motor4Speed)
 
         except:
@@ -240,6 +236,12 @@ try:
         sio.connect('http://192.168.250.11:3000')
 
     sio.wait()
+
+    for scan in lidar.iter_scans():
+        for (_, angle, distance) in scan:
+            scan_data[min([359, floor(angle)])] = distance
+        cart = process_data(scan_data)
+        sio.emit("lidar", cart)
 
 except KeyboardInterrupt:
     print("Thank You For Comming :)")
