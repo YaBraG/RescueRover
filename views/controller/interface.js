@@ -56,9 +56,12 @@ socket.on("lidar-data", data=> {
     console.log(lidar)
 })
 function updataLidar () {
-    let offset={x:800, y:800}
+    let offset={x:400, y:400}
+    color("red")
+    circle(0,0,6)
+    color("black")
     lidar.forEach(([x,y])=>{
-        triangle(x*5-offset.x,y*5-offset.y, 4);
+        triangle(x*4-offset.x,y*4-offset.y, 2);
     })
 }
 
